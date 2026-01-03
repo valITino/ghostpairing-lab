@@ -1,0 +1,20 @@
+# Core server dependencies (REQUIRED)
+# Using >= for Python 3.13+ compatibility
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+python-socketio>=5.9.0
+requests>=2.31.0
+
+# WebSocket support
+websockets>=12.0
+
+# Browser automation (REQUIRED for real GhostPairing flow)
+playwright>=1.40.0
+beautifulsoup4>=4.12.2
+psutil>=5.9.0
+
+# Note: sqlite3 is built into Python, no pip install needed
+
+# Optional: For MITMProxy interception (install separately if needed)
+# mitmproxy==10.1.1
