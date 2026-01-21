@@ -28,6 +28,12 @@ This lab simulates a **real GhostPairing attack** using browser automation:
 
 ### 1. Installation
 ```bash
+# Clone repository
+git clone https://www.github.com/valITino/ghostpairing-lab
+
+# go to the cloned directory
+cd ghostpairing-lab
+
 # Make scripts executable
 chmod +x *.sh
 
