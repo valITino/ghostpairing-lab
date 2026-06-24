@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostPairing Admin Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+               background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 20px; }
+        .header { margin-bottom: 24px; }
+        .header h1 { font-size: 22px; color: #f1f5f9; }
+        .header .sub { color: #94a3b8; font-size: 13px; margin-top: 4px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                      gap: 14px; margin-bottom: 24px; }
+        .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+                     padding: 18px; text-align: center; }
+        .stat-card .value { font-size: 32px; font-weight: 700; color: #38bdf8; }
+        .stat-card .label { font-size: 12px; color: #94a3b8; margin-top: 4px;
+                            text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card.danger .value { color: #f87171; }
+        .stat-card.success .value { color: #4ade80; }
+        table { width: 100%; border-collapse: collapse; background: #1e293b;
+                border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
+        th { background: #334155; padding: 12px 14px; text-align: left; font-size: 12px;
+             text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+        td { padding: 10px 14px; border-top: 1px solid #1e293b; font-size: 13px; }
+        tr:hover { background: rgba(56, 189, 248, 0.05); }
+        .status { display: inline-block; padding: 3px 10px; border-radius: 12px;
+                  font-size: 11px; font-weight: 600; }
+        .status.pending { background: #334155; color: #94a3b8; }
+        .status.running { background: #1e3a5f; color: #38bdf8; }
+        .status.success { background: #14532d; color: #4ade80; }
+        .status.failed { background: #450a0a; color: #f87171; }
+        .btn { background: #334155; color: #e2e8f0; border: 1px solid #475569;
+               padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px;
+               margin-right: 8px; }
+        .btn:hover { background: #475569; }
+        .btn-danger { background: #450a0a; border-color: #7f1d1d; color: #fca5a5; }
+        .btn-danger:hover { background: #7f1d1d; }
+        .refresh-indicator { color: #4ade80; font-size: 12px; }
+        #ws-status { display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+                     margin-right: 6px; }
+        #ws-status.connected { background: #4ade80; }
+        #ws-status.disconnected { background: #f87171; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ GhostPairing Admin</h1>
+        <div class="sub">
+            <span id="ws-status" class="disconnected"></span>
+            <span id="ws-text">Disconnected</span> &nbsp;|&nbsp;
+            Last refresh: <span id="last-refresh" class="refresh-indicator">--</span>
+        </div>
+    </div>
+
+    <div class="stats-grid" id="stats">
+        <div class="stat-card"><div class="value" id="stat-total">0</div><div class="label">Total Attacks</div></div>
+        <div class="stat-card success"><div class="value" id="stat-success">0</div><div class="label">Successful</div></div>
+        <div class="stat-card"><div class="value" id="stat-auto">0</div><div class="label">With Automation</div></div>
+        <div class="stat-card danger"><div class="value" id="stat-rate">0%</div><div class="label">Success Rate</div></div>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+        <button class="btn" onclick="refreshData()">🔄 Refresh</button>
+        <button class="btn btn-danger" onclick="clearDB()">🗑️ Clear Database</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Code</th>
+                <th>Auto</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody id="attack-list">
+            <tr><td colspan="6" style="text-align: center; color: #94a3b8;">Loading...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        let ws = null;
+
+        function connectWS() {
+            const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${proto}//${location.host}/ws/monitor`);
+
+            ws.onopen = () => {
+                document.getElementById('ws-status').className = 'connected';
+                document.getElementById('ws-text').textContent = 'Connected';
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.type === 'stats_update' && data.stats) {
+                    updateStats(data.stats);
+                } else if (data.type === 'new_attack') {
+                    refreshData();
+                }
+            };
+
+            ws.onclose = () => {
+                document.getElementById('ws-status').className = 'disconnected';
+                document.getElementById('ws-text').textContent = 'Disconnected';
+                setTimeout(connectWS, 5000);
+            };
+
+            ws.onerror = () => ws.close();
+        }
+
+        function updateStats(stats) {
+            document.getElementById('stat-total').textContent = stats.total_attacks || 0;
+            document.getElementById('stat-success').textContent = stats.successful || 0;
+            document.getElementById('stat-auto').textContent = stats.automation_started || 0;
+            document.getElementById('stat-rate').textContent =
+                (stats.success_rate || 0).toFixed(1) + '%';
+        }
+
+        async function refreshData() {
+            try {
+                const [statsRes, attacksRes] = await Promise.all([
+                    fetch('/api/stats'),
+                    fetch('/api/attacks')
+                ]);
+                const stats = await statsRes.json();
+                const attacks = await attacksRes.json();
+
+                updateStats(stats);
+
+                const tbody = document.getElementById('attack-list');
+                if (!attacks.attacks || attacks.attacks.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;">No attacks yet</td></tr>';
+                } else {
+                    tbody.innerHTML = attacks.attacks.map(a => `
+                        <tr>
+                            <td>#${a.id}</td>
+                            <td>${a.phone ? a.phone.substring(0, 6) + '***' : '—'}</td>
+                            <td><span class="status ${a.status || 'pending'}">${a.status || 'pending'}</span></td>
+                            <td>${a.code_received || '—'}</td>
+                            <td>${a.automation_success ? '✅' : a.automation_started ? '🔄' : '—'}</td>
+                            <td>${a.timestamp ? new Date(a.timestamp).toLocaleTimeString() : '—'}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                document.getElementById('last-refresh').textContent = new Date().toLocaleTimeString();
+            } catch (e) {
+                console.error('Refresh error:', e);
+            }
+        }
+
+        async function clearDB() {
+            if (!confirm('Delete ALL attack data? This cannot be undone.')) return;
+            const token = prompt('Enter admin token:');
+            if (!token) return;
+
+            try {
+                const res = await fetch('/clear-db', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    alert('Database cleared');
+                    refreshData();
+                } else {
+                    alert('Unauthorized — invalid admin token');
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        // Init
+        connectWS();
+        refreshData();
+        setInterval(refreshData, 15000);  // auto-refresh every 15s
+    </script>
+</body>
+</html>

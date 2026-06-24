@@ -1,0 +1,363 @@
+/* ── GhostPairing Phishing Page Styles ── */
+/* Professional, clean design — corporate/enterprise look */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background: #f0f2f5;
+    color: #1a1a2e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+}
+
+/* ── Header ── */
+.header {
+    margin-bottom: 28px;
+}
+
+.header .brand-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+    color: #fff;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(10, 102, 194, 0.25);
+}
+
+.header h1 {
+    color: #1a1a2e;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+}
+
+.header .subtitle {
+    color: #666;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* ── Card ── */
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e4e6eb;
+}
+
+/* ── Info Boxes ── */
+.info-box {
+    background: #f8f9fb;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 18px 0;
+    border: 1px solid #e4e6eb;
+    text-align: left;
+    font-size: 13.5px;
+    line-height: 1.55;
+}
+
+.info-box h4 {
+    color: #1a1a2e;
+    margin-bottom: 10px;
+    font-size: 14.5px;
+    font-weight: 600;
+}
+
+.info-box p {
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.info-box ol, .info-box ul {
+    margin-left: 18px;
+    margin-bottom: 0;
+    color: #555;
+}
+
+.info-box li {
+    margin-bottom: 7px;
+}
+
+.info-box li:last-child {
+    margin-bottom: 0;
+}
+
+.highlight-box {
+    background: #e8f4fd;
+    border: 1px solid #b8d8f0;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 22px;
+}
+
+.highlight-box p {
+    font-size: 13.5px;
+    color: #1a4972;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.success-box {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+.success-box h4 { color: #065f46; }
+.success-box p { color: #047857; }
+
+.warning-box {
+    background: #fffbeb;
+    border-color: #fcd34d;
+}
+
+.warning-box h4 { color: #78350f; }
+.warning-box p { color: #92400e; }
+
+/* ── Form Elements ── */
+label {
+    display: block;
+    margin-bottom: 7px;
+    color: #555;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.phone-input-group {
+    display: flex;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ccd0d5;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 18px;
+}
+
+.phone-input-group:focus-within {
+    border-color: #0a66c2;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+}
+
+.country-select {
+    background: #f8f9fb;
+    padding: 12px 10px;
+    color: #1a1a2e;
+    font-size: 14px;
+    border-right: 1px solid #e4e6eb;
+    min-width: 95px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 24px;
+}
+
+.phone-input-group input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 14px;
+    color: #1a1a2e;
+    font-size: 15px;
+    outline: none;
+}
+
+.phone-input-group input::placeholder {
+    color: #999;
+}
+
+/* ── Buttons ── */
+.btn {
+    background: #0a66c2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+    background: #084d92;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.btn:disabled {
+    background: #ccd0d5;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #555;
+    border: 1px solid #ccd0d5;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover {
+    background: #f8f9fb;
+    border-color: #999;
+}
+
+/* ── Code Display ── */
+.code-display {
+    background: #fff;
+    border: 2px solid #0a66c2;
+    font-size: 38px;
+    font-weight: 700;
+    padding: 22px;
+    letter-spacing: 5px;
+    color: #0a66c2;
+    box-shadow: 0 2px 10px rgba(10, 102, 194, 0.12);
+    border-radius: 10px;
+    margin: 22px 0;
+    font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* ── Steps ── */
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Loader ── */
+.loader {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e4e6eb;
+    border-top-color: #0a66c2;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-container {
+    background: #f8f9fb;
+    border: 1px solid #e4e6eb;
+    border-radius: 12px;
+    padding: 36px 20px;
+    margin: 18px auto;
+    text-align: center;
+}
+
+/* ── Success State ── */
+.success-badge {
+    background: #ecfdf5;
+    border: 2px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.success-badge .check-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.success-badge h3 {
+    color: #065f46;
+    margin-bottom: 8px;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.success-badge p {
+    color: #047857;
+    font-size: 13.5px;
+    margin: 0;
+}
+
+/* ── Error State ── */
+.error-banner {
+    background: #fef2f2;
+    border: 2px solid #fecaca;
+    border-radius: 12px;
+    padding: 22px;
+    margin-top: 22px;
+    text-align: center;
+}
+
+.error-banner h4 {
+    color: #991b1b;
+    margin-bottom: 10px;
+}
+
+.error-banner p {
+    color: #7f1d1d;
+    margin-bottom: 14px;
+    font-size: 13.5px;
+}
+
+/* ── Footer ── */
+.footer-text {
+    margin-top: 22px;
+    font-size: 12.5px;
+    color: #888;
+    line-height: 1.55;
+}
+
+.footer-text a {
+    color: #0a66c2;
+    text-decoration: none;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+    .card { padding: 24px 18px; }
+    .code-display { font-size: 30px; padding: 18px; letter-spacing: 4px; }
+    .header h1 { font-size: 22px; }
+}

@@ -1,0 +1,1 @@
+"""MITMProxy addon module."""

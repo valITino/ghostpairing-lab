@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Database files
+databases/*.db
+*.db
+
+# Logs
+logs/*.log
+logs/*.log.*
+
+# Session data
+sessions/
+automation_queues/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# MITMProxy
+mitm_automation.py
+
+# Nested project copy (git repo inside repo)
+ghostpairing-lab/
+
+# Debug screenshots
+/tmp/whatsapp_debug_*.png

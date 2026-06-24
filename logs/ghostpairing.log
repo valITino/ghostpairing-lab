@@ -1,0 +1,86 @@
+{"timestamp":"2026-06-24T05:59:06.902-04:00","level":"INFO","logger":"server","message":"GhostPairing server starting up","function":"lifespan","line":48}
+{"timestamp":"2026-06-24T06:00:21.371-04:00","level":"WARNING","logger":"api.routes_attack","message":"GhostPairing attack initiated for +4176***","function":"request_verification_code","line":40}
+{"timestamp":"2026-06-24T06:00:21.373-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Starting pairing flow for attack 2 (phone: +4176***)","function":"run","line":60}
+{"timestamp":"2026-06-24T06:00:21.373-04:00","level":"INFO","logger":"automation.browser_manager","message":"Launching Firefox via Playwright","function":"start","line":52}
+{"timestamp":"2026-06-24T06:00:21.374-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Attack 2: pairing flow started for +4176***","function":"request_verification_code","line":474}
+{"timestamp":"2026-06-24T06:00:21.374-04:00","level":"INFO","logger":"api.routes_attack","message":"Browser automation started for attack 2","function":"request_verification_code","line":61}
+{"timestamp":"2026-06-24T06:00:21.994-04:00","level":"INFO","logger":"automation.browser_manager","message":"Browser launched successfully","function":"start","line":65}
+{"timestamp":"2026-06-24T06:00:22.457-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Navigating to WhatsApp Web","function":"_navigate_to_whatsapp","line":157}
+{"timestamp":"2026-06-24T06:00:25.182-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Looking for 'Link with phone number' button","function":"_click_link_phone","line":169}
+{"timestamp":"2026-06-24T06:00:30.534-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Clicked: div[role="button"]:has-text("log in")","function":"_click_link_phone","line":175}
+{"timestamp":"2026-06-24T06:00:32.534-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Entering phone number: +4176***","function":"_enter_phone","line":203}
+{"timestamp":"2026-06-24T06:00:35.804-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Clicked Next: text="Next"","function":"_enter_phone","line":229}
+{"timestamp":"2026-06-24T06:00:37.805-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Capturing displayed code from WhatsApp Web...","function":"_capture_displayed_code","line":244}
+{"timestamp":"2026-06-24T06:00:37.815-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Code captured (leaf scan): CM2E-CTCM","function":"_capture_displayed_code","line":271}
+{"timestamp":"2026-06-24T06:00:37.818-04:00","level":"WARNING","logger":"api.routes_attack","message":"Displayed code captured from WhatsApp Web: CM2E-CTCM","function":"display_code_endpoint","line":79}
+{"timestamp":"2026-06-24T06:00:37.818-04:00","level":"INFO","logger":"api.routes_attack","message":"Sending to phishing page for attack 2","function":"display_code_endpoint","line":80}
+{"timestamp":"2026-06-24T06:00:37.819-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Sent displayed code to phishing page: CM2E-CTCM","function":"_send_displayed_code_to_server","line":305}
+{"timestamp":"2026-06-24T06:00:37.819-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Waiting for victim to submit verification code...","function":"_wait_for_victim_code","line":311}
+{"timestamp":"2026-06-24T06:05:47.639-04:00","level":"WARNING","logger":"api.routes_attack","message":"GhostPairing attack initiated for +4176***","function":"request_verification_code","line":40}
+{"timestamp":"2026-06-24T06:05:47.640-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Starting pairing flow for attack 3 (phone: +4176***)","function":"run","line":60}
+{"timestamp":"2026-06-24T06:05:47.640-04:00","level":"INFO","logger":"automation.browser_manager","message":"Reusing existing browser instance","function":"start","line":47}
+{"timestamp":"2026-06-24T06:05:47.641-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Attack 3: pairing flow started for +4176***","function":"request_verification_code","line":474}
+{"timestamp":"2026-06-24T06:05:47.641-04:00","level":"INFO","logger":"api.routes_attack","message":"Browser automation started for attack 3","function":"request_verification_code","line":61}
+{"timestamp":"2026-06-24T06:05:47.642-04:00","level":"ERROR","logger":"automation.pairing_flow","message":"Pairing flow failed: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f7554c65280 (otid=0x7f7540001200) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"run","line":143}
+{"timestamp":"2026-06-24T06:05:47.642-04:00","level":"WARNING","logger":"automation.pairing_flow","message":"Attack 3: pairing flow failed — Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f7554c65280 (otid=0x7f7540001200) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"_run_flow_thread","line":494}
+{"timestamp":"2026-06-24T06:06:44.303-04:00","level":"WARNING","logger":"api.routes_attack","message":"GhostPairing attack initiated for +4176***","function":"request_verification_code","line":40}
+{"timestamp":"2026-06-24T06:06:44.305-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Starting pairing flow for attack 4 (phone: +4176***)","function":"run","line":60}
+{"timestamp":"2026-06-24T06:06:44.305-04:00","level":"INFO","logger":"automation.browser_manager","message":"Reusing existing browser instance","function":"start","line":47}
+{"timestamp":"2026-06-24T06:06:44.305-04:00","level":"ERROR","logger":"automation.pairing_flow","message":"Pairing flow failed: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f7554c59840 (otid=0x7f7540000f30) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"run","line":143}
+{"timestamp":"2026-06-24T06:06:44.306-04:00","level":"WARNING","logger":"automation.pairing_flow","message":"Attack 4: pairing flow failed — Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f7554c59840 (otid=0x7f7540000f30) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"_run_flow_thread","line":494}
+{"timestamp":"2026-06-24T06:06:44.311-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Attack 4: pairing flow started for +4176***","function":"request_verification_code","line":474}
+{"timestamp":"2026-06-24T06:06:44.311-04:00","level":"INFO","logger":"api.routes_attack","message":"Browser automation started for attack 4","function":"request_verification_code","line":61}
+{"timestamp":"2026-06-24T06:07:26.810-04:00","level":"INFO","logger":"server","message":"GhostPairing server shutting down","function":"lifespan","line":50}
+{"timestamp":"2026-06-24T06:07:26.811-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Cleaning up WhatsAppGhostAPI...","function":"cleanup","line":552}
+{"timestamp":"2026-06-24T06:07:26.811-04:00","level":"INFO","logger":"automation.browser_manager","message":"Cleaning up browser resources","function":"cleanup","line":104}
+{"timestamp":"2026-06-24T06:07:26.814-04:00","level":"DEBUG","logger":"automation.browser_manager","message":"Error closing context: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f75585a7780 (otid=0x7f7540000f30) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"cleanup","line":110}
+{"timestamp":"2026-06-24T06:07:26.815-04:00","level":"DEBUG","logger":"automation.browser_manager","message":"Error closing browser: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f75585a7780 (otid=0x7f7540000f30) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"cleanup","line":117}
+{"timestamp":"2026-06-24T06:07:26.815-04:00","level":"DEBUG","logger":"automation.browser_manager","message":"Error stopping playwright: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7f75585a7780 (otid=0x7f7540000f30) current active started main>
+	Expected: <greenlet.greenlet object at 0x7f75560d2780 (otid=0x7f754c0010e0) suspended active started main>","function":"cleanup","line":124}
+{"timestamp":"2026-06-24T06:07:26.815-04:00","level":"INFO","logger":"automation.browser_manager","message":"Browser cleanup complete","function":"cleanup","line":126}
+{"timestamp":"2026-06-24T06:07:26.815-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Cleanup complete","function":"cleanup","line":556}
+{"timestamp":"2026-06-24T06:07:34.201-04:00","level":"INFO","logger":"server","message":"GhostPairing server starting up","function":"lifespan","line":48}
+{"timestamp":"2026-06-24T06:08:41.250-04:00","level":"WARNING","logger":"api.routes_attack","message":"GhostPairing attack initiated for +4176***","function":"request_verification_code","line":40}
+{"timestamp":"2026-06-24T06:08:41.251-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Starting pairing flow for attack 5 (phone: +4176***)","function":"run","line":60}
+{"timestamp":"2026-06-24T06:08:41.251-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Attack 5: pairing flow started for +4176***","function":"request_verification_code","line":474}
+{"timestamp":"2026-06-24T06:08:41.251-04:00","level":"INFO","logger":"automation.browser_manager","message":"Launching Firefox via Playwright","function":"start","line":52}
+{"timestamp":"2026-06-24T06:08:41.251-04:00","level":"INFO","logger":"api.routes_attack","message":"Browser automation started for attack 5","function":"request_verification_code","line":61}
+{"timestamp":"2026-06-24T06:08:41.875-04:00","level":"INFO","logger":"automation.browser_manager","message":"Browser launched successfully","function":"start","line":65}
+{"timestamp":"2026-06-24T06:08:42.349-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Navigating to WhatsApp Web","function":"_navigate_to_whatsapp","line":157}
+{"timestamp":"2026-06-24T06:08:45.090-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Looking for 'Link with phone number' button","function":"_click_link_phone","line":169}
+{"timestamp":"2026-06-24T06:08:50.430-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Clicked: div[role="button"]:has-text("log in")","function":"_click_link_phone","line":175}
+{"timestamp":"2026-06-24T06:08:52.431-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Entering phone number: +4176***","function":"_enter_phone","line":203}
+{"timestamp":"2026-06-24T06:08:55.680-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Clicked Next: text="Next"","function":"_enter_phone","line":229}
+{"timestamp":"2026-06-24T06:08:57.681-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Capturing displayed code from WhatsApp Web...","function":"_capture_displayed_code","line":244}
+{"timestamp":"2026-06-24T06:08:57.689-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Code captured (leaf scan): RC9F-2YKS","function":"_capture_displayed_code","line":271}
+{"timestamp":"2026-06-24T06:08:57.692-04:00","level":"WARNING","logger":"api.routes_attack","message":"Displayed code captured from WhatsApp Web: RC9F-2YKS","function":"display_code_endpoint","line":79}
+{"timestamp":"2026-06-24T06:08:57.692-04:00","level":"INFO","logger":"api.routes_attack","message":"Sending to phishing page for attack 5","function":"display_code_endpoint","line":80}
+{"timestamp":"2026-06-24T06:08:57.693-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Sent displayed code to phishing page: RC9F-2YKS","function":"_send_displayed_code_to_server","line":305}
+{"timestamp":"2026-06-24T06:08:57.693-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Waiting for victim to submit verification code...","function":"_wait_for_victim_code","line":311}
+{"timestamp":"2026-06-24T07:06:48.654-04:00","level":"INFO","logger":"server","message":"GhostPairing server shutting down","function":"lifespan","line":50}
+{"timestamp":"2026-06-24T07:06:48.655-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Cleaning up WhatsAppGhostAPI...","function":"cleanup","line":552}
+{"timestamp":"2026-06-24T07:06:48.655-04:00","level":"INFO","logger":"automation.browser_manager","message":"Cleaning up browser resources","function":"cleanup","line":104}
+{"timestamp":"2026-06-24T07:06:48.656-04:00","level":"DEBUG","logger":"automation.browser_manager","message":"Error closing context: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7fa62ad078c0 (otid=0x342e9820) current active started main>
+	Expected: <greenlet.greenlet object at 0x7fa62bfcde40 (otid=0x7fa6180010e0) suspended active started main>","function":"cleanup","line":110}
+{"timestamp":"2026-06-24T07:06:48.657-04:00","level":"DEBUG","logger":"automation.browser_manager","message":"Error closing browser: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7fa62ad078c0 (otid=0x342e9820) current active started main>
+	Expected: <greenlet.greenlet object at 0x7fa62bfcde40 (otid=0x7fa6180010e0) suspended active started main>","function":"cleanup","line":117}
+{"timestamp":"2026-06-24T07:06:48.657-04:00","level":"DEBUG","logger":"automation.browser_manager","message":"Error stopping playwright: Cannot switch to a different thread
+	Current:  <greenlet.greenlet object at 0x7fa62ad078c0 (otid=0x342e9820) current active started main>
+	Expected: <greenlet.greenlet object at 0x7fa62bfcde40 (otid=0x7fa6180010e0) suspended active started main>","function":"cleanup","line":124}
+{"timestamp":"2026-06-24T07:06:48.657-04:00","level":"INFO","logger":"automation.browser_manager","message":"Browser cleanup complete","function":"cleanup","line":126}
+{"timestamp":"2026-06-24T07:06:48.657-04:00","level":"INFO","logger":"automation.pairing_flow","message":"Cleanup complete","function":"cleanup","line":556}
